@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Evangelion.dao.UserMapper">
+
+    <!--查询所有用户信息
+        namespace: 取值是dao接口的全类名
+        id: 取值是方法名
+        resultType:取值是实体类的全类名：包名.类名
+            使用resultType的条件：
+                1.必须进行的是单表查询
+                2.表中的字段名（查询语句的字段名）要和实体类中的成员变量名称完全一致。
+                resultMap:使用场景
+                1.连表查询时必须使用
+                2.查询结果的字段名称和实体类成员变量名称不一样时，都可以使用resultMap
+                3.resultMap和Type不能同时使用，一次只能用一个
+            定义resultMap:
+                1.id:取值必须唯一，值自定义
+                2.Type:取值由Dao接口中方法的返回值决定，若返回值为实体类对象or泛型集合
+    -->
+    <resultMap id="userMap" type="User">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="password" column="password"/>
+        <result property="age" column="age"/>
+        <result property="birthday" column="birthday"/>
+    </resultMap>
+
+    <select id="getAll" resultMap="userMap">
+        select * from t_user;
+    </select>
+
+<!--添加用户信息
+    添删改都不需要配置返回值。系统默认会返回一个整数，只有查询需要配置返回值/
+    parameterType；用于方法入参，取值是方法的形参的数据类型
+    注意：若为对象入参，#{}中配置的是实体类的成员变量名，
+-->
+    <insert id="addUser">
+        insert into t_user(name, password, age, birthday)
+        values (#{name}, #{password}, #{age}, #{birthday});
+    </insert>
+
+
+    <delete id="deleteUser">
+        DELETE FROM t_user
+        WHERE id = #{id}
+    </delete>
+
+</mapper>
