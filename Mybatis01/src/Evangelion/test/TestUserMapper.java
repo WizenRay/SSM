@@ -13,6 +13,7 @@ import java.util.List;
 
 public class TestUserMapper {
     public static void main(String[] args) {
+        System.out.println("Hello World!");
         try {
             //1.加载mybatis的全局配置文件
             InputStream inputStream = Resources.getResourceAsStream("mybatis_config.xml");
